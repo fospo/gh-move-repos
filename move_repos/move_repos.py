@@ -24,8 +24,9 @@ def transfer_repository(source_org: str, dest_org: str, repo_name: str, access_t
     ).status_code == 202
 
 
-def transfer_check(url: str) -> bool:
+def transfer_check(dest_org: str, repo_name: str) -> bool:
     """Check status of transfer, if it's done it should return 200"""
+    url = f"{GH_URL}/{dest_org}/{repo_name}"
     for _ in range(5):  # let's try 5 times
         if requests.get(url).ok:
             return True
@@ -73,9 +74,7 @@ if __name__ == "__main__":
             source_org, dest_org, repo_name, access_token
         )
         if transfer_results[repo_name]:
-            transfer_results[repo_name] = transfer_check(
-                f"{GH_URL}/{dest_org}/{repo_name}"
-            )
+            transfer_results[repo_name] = transfer_check(dest_org, repo_name)
 
     print_results(transfer_results)
     sys.exit()
