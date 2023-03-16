@@ -11,7 +11,8 @@ SLEEP_TIME = 0.5
 
 
 def transfer_repository(source_org: str, dest_org: str, repo_name: str, access_token: str) -> bool:
-    """Transfer repo via API"""
+    """Transfer repo via API, return status"""
+    """See https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#transfer-a-repository"""
     url = f"{GH_API_ENDPOINT}/repos/{source_org}/{repo_name}/transfer"
     headers = {"Authorization": f"token {access_token}"}
     data = {"new_owner": dest_org}
@@ -26,7 +27,7 @@ def transfer_repository(source_org: str, dest_org: str, repo_name: str, access_t
 def transfer_check(url: str) -> bool:
     """Check status of transfer, if it's done it should return 200"""
     for _ in range(5):  # let's try 5 times
-        if requests.get(url).status_code == 200:
+        if requests.get(url).ok:
             return True
         time.sleep(SLEEP_TIME)
 
