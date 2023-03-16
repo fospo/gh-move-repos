@@ -16,11 +16,11 @@ def transfer_repository(source_org: str, dest_org: str, repo_name: str, access_t
     headers = {"Authorization": f"token {access_token}"}
     data = {"new_owner": dest_org}
 
-    response = requests.post(url, headers=headers, json=data)
-    if response.status_code == 202:
-        return True
-
-    return False
+    return requests.post(
+        url,
+        headers=headers,
+        json=data,
+    ).status_code == 202
 
 
 def transfer_check(url: str) -> bool:
