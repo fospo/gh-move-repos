@@ -10,10 +10,12 @@ This script automates the process of transferring repositories from one GitHub o
 ## Usage
 
 1. Clone or download this repository.
-2. Install the required packages via pip: `pip install -r requirements.txt`
-3. Set your GitHub token as an environment variable `GH_TOKEN`.
-4. Prepare a file with a list of repository names, one per line.
-5. Run the script with the following command:
+2. (optional) Install a virtualenv `python3 -m virtualenv .venv` and then
+   `source .venv/bin/activate`
+3. Install the required packages via pip: `pip install -r requirements.txt`
+4. Set your GitHub token as an environment variable `GH_TOKEN`.
+5. Prepare a file with a list of repository names, one per line.
+6. Run the script with the following command:
 
 ```
 python3 move_repos.py source_org dest_org file_name
