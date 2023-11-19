@@ -17,8 +17,8 @@ function transfer_repository_with_gh() {
     fi
 }
 
-source_org="source_org"
-dest_org="dest_org"
+source_org=$1
+dest_org=$2
 
 # Read from stdin (pipe) or from file
 while IFS= read -r repo; do
