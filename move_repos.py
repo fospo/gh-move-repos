@@ -48,6 +48,10 @@ def print_results(transfer_results: Dict[str, bool]) -> None:
             print(f"{repo_name}: Fail")
             fail += 1
 
+    if success + fail == 0:
+        print("No repos were transferred")
+        sys.exit()
+
     print("\n=== Transfer Summary: ===")
     print(f"Success: {success}, percentage: {success / (success + fail) * 100:.2f}%")
     print(f"Fail: {fail}, percentage: {fail / (success + fail) * 100:.2f}%")
@@ -66,7 +70,7 @@ if __name__ == "__main__":
     ), "GH_TOKEN is not set. Check your GH_TOKEN env variable."
 
     with open(file_name, "r") as fIn:
-        repo_names_list = [line.strip() for line in fIn.readlines()]
+        repo_names_list = [line.strip().split(',')[0] for line in fIn.readlines()]
 
     transfer_results = {}
     for repo_name in repo_names_list:

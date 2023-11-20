@@ -40,5 +40,16 @@ does not have a predetermined time for this task to complete so the check at
 point 2 _may_ fail, especially if the repository is quite large. Increasing the
 `SLEEP_TIME` constant might do the trick. 
 
+## Chaining
+It is possible to launch this script from another script. For example, you can chain it in the following way:
+    
+```bash
+python3 crawler.py -i org fospo -o print -f name archived > tmp.txt && \
+python3 move_repos.py fospo dest_org tmp.txt && \
+rm tmp.txt
+```
+
+In this way, for example, you will get all the repositories marked as archived in the organization `fospo` and move them to an organization of your choice.
+
 # Licensing
 This repo is covered by a MIT License. See the [LICENSE](LICENSE) file for more details.
