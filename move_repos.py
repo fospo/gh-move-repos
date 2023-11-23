@@ -49,8 +49,7 @@ def print_results(transfer_results: Dict[str, bool]) -> None:
             fail += 1
 
     if success + fail == 0:
-        print("No repos were transferred")
-        sys.exit()
+        sys.exit("No repos were transferred.")
 
     print("\n=== Transfer Summary: ===")
     print(f"Success: {success}, percentage: {success / (success + fail) * 100:.2f}%")
@@ -81,4 +80,4 @@ if __name__ == "__main__":
             transfer_results[repo_name] = transfer_check(dest_org, repo_name)
 
     print_results(transfer_results)
-    sys.exit()
+    sys.exit(0)
