@@ -55,8 +55,15 @@ In this way, for example, you will get all the repositories marked as archived i
 If you want to get a list of archived repos in a given org and then move them to another org, you can use the following command:
 
 ```bash
+gh repo list <source_org> --archived --json=name | jq -r '.[] | .name' | ./move_repos.sh <source_org> <dest_org>
+```
+
+or via gh api:
+
+```bash
 gh api /orgs/<source_org>/repos --paginate | jq -r '.[] | select(.archived == true) | .name' | ./move_repos.sh <source_org> <dest_org>
 ````
+
 
 # Licensing
 This repo is covered by a MIT License. See the [LICENSE](LICENSE) file for more details.
