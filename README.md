@@ -51,5 +51,12 @@ rm tmp.txt
 
 In this way, for example, you will get all the repositories marked as archived in the organization `fospo` and move them to an organization of your choice.
 
+## Moving archived repos
+If you want to get a list of archived repos in a given org and then move them to another org, you can use the following command:
+
+```bash
+gh api /orgs/<source_org>/repos --paginate | jq -r '.[] | select(.archived == true) | .name' | ./move_repos.sh <source_org> <dest_org>
+````
+
 # Licensing
 This repo is covered by a MIT License. See the [LICENSE](LICENSE) file for more details.
