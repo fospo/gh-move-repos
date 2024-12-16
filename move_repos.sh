@@ -6,10 +6,17 @@ function transfer_repository_with_gh() {
     dest_org=$2
     repo_name=$3
 
-    gh repo transfer $dest_org --repo $source_org/$repo_name -y
+    echo "Transferring $repo_name from $source_org to $dest_org"
+
+    # Transfer repository via GH CLI
+    gh api repos/$source_org/$repo_name/transfer -f new_owner=$dest_org --silent
 
     # Check if transfer was successful
-    owner=$(curl -s -H "Authorization: token $GH_TOKEN" "https://api.github.com/repos/$dest_org/$repo_name" | jq -r .owner.login)
+    # Sleeping a bit to allow transfer to complete
+    echo "Checking transfer status..."
+    sleep 2
+    # Get new owner and test against expected destination
+    owner=$(gh api repos/$dest_org/$repo_name --jq '.owner.login')
     if [[ $owner == $dest_org ]]; then
         echo "Transfer of $repo_name to $dest_org was successful."
     else
