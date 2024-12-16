@@ -16,7 +16,7 @@ function transfer_repository_with_gh() {
     echo "Checking transfer status..."
     sleep 2
     # Get new owner and test against expected destination
-    owner=$(gh api repos/$dest_org/$repo_name --jq '.owner.login')
+    owner=$(gh repo view $dest_org/$repo_name --json owner -q '.owner.login')
     if [[ $owner == $dest_org ]]; then
         echo "Transfer of $repo_name to $dest_org was successful."
     else
